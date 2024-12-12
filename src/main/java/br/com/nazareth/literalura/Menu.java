@@ -1,9 +1,12 @@
 package br.com.nazareth.literalura;
 
+import br.com.nazareth.literalura.services.ConsumoApi;
+
 import java.util.Scanner;
 
 public class Menu {
-
+    private ConsumoApi consumo = new ConsumoApi();
+    private final String ENDERECO = "https://gutendex.com/books/?search=";
     Scanner scanner = new Scanner(System.in);
     public int selecao;
     private static String opcoesMenu = """
@@ -53,28 +56,29 @@ public class Menu {
 
     }
 
-    private static void searchNewBookByTitle() {
+    private void searchNewBookByTitle() {
         System.out.println("Qual o nome do livro que deseja procurar?");
+        var buscaNomeDoLivro = scanner.nextLine().replace(" ", "%20").toLowerCase();
+        var json = consumo.obterDados(ENDERECO + buscaNomeDoLivro);
+    }
+
+    private void listarLivrosSalvos() {
 
     }
 
-    private static void listarLivrosSalvos() {
+    private void listarLivrosSalvosPorAutor() {
 
     }
 
-    private static void listarLivrosSalvosPorAutor() {
+    private void listarLivrosSalvosPorGenero() {
 
     }
 
-    private static void listarLivrosSalvosPorGenero() {
+    private void listarLivrosSalvosPorIdioma() {
 
     }
 
-    private static void listarLivrosSalvosPorIdioma() {
-
-    }
-
-    private static void listarLivrosSalvosPorAnoLancamento() {
+    private void listarLivrosSalvosPorAnoLancamento() {
 
     }
 
