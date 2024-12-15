@@ -29,7 +29,7 @@ public class Menu {
         while (selecao != -1) {
             switch (selecao) {
                 case 0:
-                    System.out.println("Saindo do programa. Até mais:)");
+                    System.out.println("Saindo do programa. Até mai s:)");
                     System.exit(0);
                 case 1:
                      searchNewBookByTitle();
