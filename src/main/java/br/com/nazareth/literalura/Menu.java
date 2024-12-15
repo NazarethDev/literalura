@@ -11,7 +11,7 @@ public class Menu {
     public int selecao;
     private static String opcoesMenu = """
             
-            ------- Livros -------
+            --------- Livros ---------
             
             Como posso te ajudar?
             
@@ -21,6 +21,8 @@ public class Menu {
             4 - Listar livros registrados por gênero
             5 - Listar livros registrados idioma
             6 - Listar livros registrados por ano de lançamento
+            
+            --------------------------
             """;
 
     public void selecaoOperacao () {

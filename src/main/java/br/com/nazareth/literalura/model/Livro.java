@@ -13,6 +13,11 @@ public class Livro {
     @ManyToOne
     private Autor autor;
 
+    public Livro(DadosLivro dadosLivro){
+        this.titulo = dadosLivro.titulo();
+        this.idioma = dadosLivro.idioma();
+    }
+
     public Long getId() {
         return id;
     }
@@ -43,5 +48,11 @@ public class Livro {
 
     public void setAutor(Autor autor) {
         this.autor = autor;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "titulo: " + titulo +", autor: " + autor +", idioma: " + idioma;
     }
 }

@@ -9,12 +9,25 @@ import java.util.List;
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "Id autor")
     private Long id;
+    @Column(name="Nome")
     private String nome;
+    @Column(name="Idioma")
+    private String idioma;
+    @Column(name="nascimento")
+    private int nascimento;
+    @Column(name="falecimento")
+    private int falecimento;
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Livro> livros;
-    private int nascimento;
-    private int falecimento;
+
+    public Autor(DadosAutor dadosAutor){
+        this.nome = dadosAutor.nome();
+        this.nascimento = dadosAutor.nascimento();
+        this.falecimento = dadosAutor.falecimento();
+        this.idioma = dadosAutor.idioma();
+    }
 
     public String getNome() {
         return nome;
@@ -54,5 +67,15 @@ public class Autor {
 
     public void setFalecimento(int falecimento) {
         this.falecimento = falecimento;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "  nome: " + nome + '\'' +
+                ", idioma: " + idioma + '\'' +
+                ", nascimento: " + nascimento +
+                ", falecimento: " + falecimento +
+                ", livros=" + livros;
     }
 }
