@@ -13,7 +13,7 @@ public class LiteraluraApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Menu menu = new Menu();
-		menu.selecaoOperacao();
+		Principal principal = new Principal();
+		principal.selecaoOperacao();
 	}
 }
