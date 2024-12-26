@@ -1,27 +1,25 @@
 package br.com.nazareth.literalura.model;
 
-import java.util.List;
 
 public enum Idiomas {
-        ENGLISH("en"),
-        SPANISH("es"),
-        FRENCH("fr"),
-        ITALIAN("it"),
-        PORTUGUESE("pt");
+    INGLÊS("en"),
+    ESPANHOL("es"),
+    FRANCÊS("fr"),
+    ITALIANO("it"),
+    PORTUGUES("pt");
 
-        private String languages;
+    private String idiomas;
 
-        Idiomas ( String languagesAlura ) {
-            this.languages = languagesAlura;
+    Idiomas(String idioma) { // Nome do parâmetro alterado para "idioma"
+        this.idiomas = idioma; // Agora, o valor correto é atribuído ao atributo "idiomas"
+    }
+
+    public static Idiomas fromString(String text) {
+        for (Idiomas categoria : Idiomas.values()) {
+            if (categoria.idiomas.equalsIgnoreCase(text)) {
+                return categoria;
+            }
         }
-
-        public static Idiomas fromString(String text) {
-            for (Idiomas idioma : Idiomas.values())
-                if (idioma.languages.equalsIgnoreCase(text)) {
-                    return idioma;
-                }
-            throw new IllegalArgumentException("Ninguna categoria encontrada: " + text);
-        }
+        throw new IllegalArgumentException("Nenhum idioma encontrado: " + text);
+    }
 }
-
-

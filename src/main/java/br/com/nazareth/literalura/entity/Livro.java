@@ -1,16 +1,14 @@
 package br.com.nazareth.literalura.entity;
 
 import br.com.nazareth.literalura.model.DadosAutor;
-import br.com.nazareth.literalura.model.DadosGerais;
 import br.com.nazareth.literalura.model.DadosLivro;
 import br.com.nazareth.literalura.model.Idiomas;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-
 import java.util.List;
-
 import java.util.ArrayList;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "livros")
@@ -30,11 +28,7 @@ public class Livro {
 
     public Livro (){}
 
-    public Livro (DadosGerais results){}
-
     public Livro ( List<DadosLivro> results ) {}
-
-    public Livro (String titulo, Idiomas idiomas, Double downloads, List<Autor> authors){}
 
     public Livro ( String titulo, List<String> idioma, Double downloads, List<DadosAutor> autores ) {
         this.titulo = titulo;
@@ -46,7 +40,6 @@ public class Livro {
             this.autores.add(autor);
         }
     }
-
 
     public Long getId () {
         return id;
@@ -93,10 +86,8 @@ public class Livro {
     public String toString () {
         return
                 "Title='" + titulo + '\'' + "\n" +
-                        "Authors=" + autores + "\n" +
-                        "Languages=" + idiomas + "\n" +
-                        "Downloads=" + downloads + "\n";
+                        "Authors: " + autores + "\n" +
+                        "Languages: " + idiomas + "\n" +
+                        "Downloads: " + downloads + "\n";
     }
-
-
 }

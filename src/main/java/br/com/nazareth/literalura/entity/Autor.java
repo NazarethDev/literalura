@@ -6,55 +6,48 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.List;
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-@Table(name = "authors")
+@Table(name = "autores")
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonProperty("name")
     private String nome;
-    @JsonProperty("birth_year")
     private Integer nascimento;
-    @JsonProperty("death_year")
-    private Integer morte;
+    private Integer falecimento;
     @ManyToOne
     private Livro livro;
 
     public Autor () {}
 
-    public Autor( Autor autor ){}
-
-    public Autor(String nome, Integer nascimento, Integer morte, Livro livro) {
+    public Autor(String nome, Integer nascimento, Integer falecimento, Livro livro) {
         this.nome = nome;
         this.nascimento = nascimento;
-        this.morte = morte;
+        this.falecimento = falecimento;
         this.livro = livro;
     }
 
-
-    public Livro getLivro () {
+    public Livro getBook () {
         return livro;
     }
 
-    public void setLivro ( Livro book ) {
-        this.livro = book;
+    public void setLivro ( Livro livro ) {
+        this.livro = livro;
     }
 
-    public Integer getMorte () {
-        return morte;
+    public Integer getFalecimento () {
+        return falecimento;
     }
 
-    public void setMorte ( Integer deathYear ) {
-        this.morte = morte;
+    public void setFalecimento ( Integer falecimento ) {
+        this.falecimento = falecimento;
     }
 
     public Integer getNascimento () {
         return nascimento;
     }
 
-    public void setNascimento ( Integer birthYear ) {
+    public void setNascimento ( Integer nascimento ) {
         this.nascimento = nascimento;
     }
 
@@ -62,7 +55,7 @@ public class Autor {
         return nome;
     }
 
-    public void setNome ( String name ) {
+    public void setNome ( String nome ) {
         this.nome = nome;
     }
 
@@ -77,8 +70,8 @@ public class Autor {
     @Override
     public String toString () {
         return
-                "nome='" + nome + '\'' +
+                "nome: '" + nome + '\'' +
                         ", nascimento: " + nascimento +
-                        ", falescimento: " + morte;
+                        ", falecimento: " + falecimento;
     }
 }

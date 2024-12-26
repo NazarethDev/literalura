@@ -2,6 +2,7 @@ package br.com.nazareth.literalura;
 
 import br.com.nazareth.literalura.entity.Livro;
 import br.com.nazareth.literalura.model.DadosGerais;
+import br.com.nazareth.literalura.repository.LivroRepositorio;
 import br.com.nazareth.literalura.services.ConsumoApi;
 import br.com.nazareth.literalura.services.ConverteDados;
 
@@ -13,6 +14,7 @@ public class Principal {
     private ConverteDados conversor = new ConverteDados();
     private final String ENDERECO = "https://gutendex.com/books/?search=";
     Scanner scanner = new Scanner(System.in);
+    private LivroRepositorio repositorio;
     public int selecao;
     private String procurarTitulo = " ";
     private static String opcoesMenu = """
@@ -40,7 +42,8 @@ public class Principal {
                 System.out.println("Saindo do programa. Até mais :)");
                 System.exit(0);
             case 1:
-                obterDadosLivro();                break;
+                novoLivro();
+                break;
             case 2:
                 listarLivrosSalvos();
                 break;
@@ -54,7 +57,7 @@ public class Principal {
                 listarLivrosSalvosPorIdioma();
                 break;
             case 6:
-                listarLivrosSalvosPorAnoLancamento();
+                listarAutoresEmUmDeterminadoAno();
                 break;
             default:
                 System.out.println("Seleção inválida, tente novamente por favor");
@@ -76,29 +79,23 @@ public class Principal {
 
     public Optional<Livro> buscaDadosLivro(DadosGerais dadosLivro, String titulo) {
         Optional <Livro> livros = dadosLivro.results().stream()
-                .filter(l->l.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
-                .map(l-> new Livro(l.getTitulo(),l.getIdiomas(),l.getDownloads(),l.getAutores()))
+                .filter(l->l.titulo().toLowerCase().contains(titulo.toLowerCase()))
+                .map(l-> new Livro(l.titulo(),l.idiomas(),l.downloads(),l.autores()))
                 .findFirst();
         return livros;
     }
 
-//    private void searchNewBookByTitle() {
-//        String titulo = procurarTitulo;
-//        DadosGerais dados = obterDadosNaApi(titulo);
-//        Livro livro = new Livro(dados);
-//        System.out.println(livro);
-//    }
-
-    private Optional<Livro> obterDadosLivro(){
-        String tituloDoLivro = entradaUsuario();
-        DadosGerais dadosLivro = obterDadosNaApi(tituloDoLivro);
-        Optional<Livro> livro = buscaDadosLivro(dadosLivro,tituloDoLivro);
+    private Optional <Livro> novoLivro() {
+        String titulo = entradaUsuario();
+        DadosGerais dadosGerais = obterDadosNaApi(titulo);
+        Optional<Livro> livro = buscaDadosLivro(dadosGerais, titulo);
 
         if (livro.isPresent()){
             var l = livro.get();
+            repositorio.save(l);
             System.out.println(l);
-        }else{
-            System.out.println("Não encontrei nenhum livro :(\n");
+        }else {
+            System.out.println("Nenhum livro encontrado :(");
         }
         return livro;
     }
@@ -119,7 +116,7 @@ public class Principal {
 
     }
 
-    private void listarLivrosSalvosPorAnoLancamento() {
+    private void listarAutoresEmUmDeterminadoAno() {
 
     }
 
