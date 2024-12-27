@@ -12,4 +12,5 @@ public interface LivroRepositorio extends JpaRepository<Livro, Long> {
     @Query("SELECT a FROM Livro l JOIN l.autores a")
     List<Autor> obterInfoAutor();
 
+
 }

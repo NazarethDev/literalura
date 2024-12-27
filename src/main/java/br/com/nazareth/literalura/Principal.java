@@ -1,11 +1,14 @@
 package br.com.nazareth.literalura;
 
+import br.com.nazareth.literalura.entity.Autor;
 import br.com.nazareth.literalura.entity.Livro;
 import br.com.nazareth.literalura.model.DadosGerais;
 import br.com.nazareth.literalura.repository.LivroRepositorio;
 import br.com.nazareth.literalura.services.ConsumoApi;
 import br.com.nazareth.literalura.services.ConverteDados;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -15,6 +18,8 @@ public class Principal {
     private final String ENDERECO = "https://gutendex.com/books/?search=";
     Scanner scanner = new Scanner(System.in);
     private LivroRepositorio livroRepositorio;
+    private List<Livro> listaLivros;
+    private List<Autor> listaAutores;
 
     public Principal(LivroRepositorio livroRepositorio) {
         this.livroRepositorio = livroRepositorio;
@@ -56,7 +61,7 @@ public class Principal {
                     listarLivrosSalvos();
                     break;
                 case 3:
-                    listarLivrosSalvosPorAutor();
+                    listarAutores();
                     break;
                 case 4:
                     listarLivrosSalvosPorGenero();
@@ -111,11 +116,18 @@ public class Principal {
     }
 
     private void listarLivrosSalvos() {
+        listaLivros = livroRepositorio.findAll();
+        listaLivros.stream()
+                .sorted(Comparator.comparing(Livro::getTitulo))
+                .forEach(System.out::println);
 
     }
 
-    private void listarLivrosSalvosPorAutor() {
-
+    private void listarAutores() {
+//     listaAutores = livroRepositorio.findAll();
+//     listaAutores.stream()
+//             .sorted(Comparator.comparing(Autor::getNome))
+//             .forEach(System.out::println);
     }
 
     private void listarLivrosSalvosPorGenero() {
