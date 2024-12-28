@@ -3,6 +3,7 @@ package br.com.nazareth.literalura;
 import br.com.nazareth.literalura.entity.Autor;
 import br.com.nazareth.literalura.entity.Livro;
 import br.com.nazareth.literalura.model.DadosGerais;
+import br.com.nazareth.literalura.model.Idiomas;
 import br.com.nazareth.literalura.repository.LivroRepositorio;
 import br.com.nazareth.literalura.services.ConsumoApi;
 import br.com.nazareth.literalura.services.ConverteDados;
@@ -20,6 +21,7 @@ public class Principal {
     private LivroRepositorio livroRepositorio;
     private List<Livro> listaLivros;
     private List<Autor> listaAutores;
+    private List<Livro> livrosPorIdioma;
 
     public Principal(LivroRepositorio livroRepositorio) {
         this.livroRepositorio = livroRepositorio;
@@ -37,12 +39,19 @@ public class Principal {
             2 - Listar livros registrados
             3 - Listar livros registrados por autor
             4 - Listar livros registrados por gênero
-            5 - Listar livros registrados idioma
+            5 - Livros Salvos por idioma
             6 - Listar livros registrados por ano de lançamento
             
             0 - sair
             
             --------------------------
+            """;
+    private String listaDeIdiomas = """
+            pt - português
+            en - inglês
+            es - espanhol
+            fr - francês
+            it - italiano
             """;
 
     public void menuPrincipal() {
@@ -124,10 +133,11 @@ public class Principal {
     }
 
     private void listarAutores() {
-//     listaAutores = livroRepositorio.findAll();
-//     listaAutores.stream()
-//             .sorted(Comparator.comparing(Autor::getNome))
-//             .forEach(System.out::println);
+     listaAutores = livroRepositorio.obterInfoAutor();
+     listaAutores.stream()
+             .sorted(Comparator.comparing(Autor::getNome))
+             .forEach(System.out::println);
+
     }
 
     private void listarLivrosSalvosPorGenero() {
@@ -135,6 +145,13 @@ public class Principal {
     }
 
     private void listarLivrosSalvosPorIdioma() {
+        System.out.println("Selecione o idioma que deseja procurar em seus livros salvos");
+        System.out.println(listaDeIdiomas);
+        String idiomaSelecionado = scanner.nextLine();
+        var idiomaParaBusca = Idiomas.fromString(idiomaSelecionado);
+        livrosPorIdioma = livroRepositorio.findByIdiomas(idiomaParaBusca);
+        livrosPorIdioma.stream()
+                .forEach(System.out::println);
 
     }
 
