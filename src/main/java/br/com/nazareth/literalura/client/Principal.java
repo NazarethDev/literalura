@@ -86,7 +86,6 @@ public class Principal {
         }
     }
 
-
     private String entradaUsuario() {
         System.out.println("\nQual livro você quer procurar?\n");
         procurarTitulo = scanner.nextLine();
