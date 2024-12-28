@@ -1,5 +1,6 @@
 package br.com.nazareth.literalura;
 
+import br.com.nazareth.literalura.client.Principal;
 import br.com.nazareth.literalura.repository.LivroRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

@@ -10,8 +10,8 @@ public enum Idiomas {
 
     private String idiomas;
 
-    Idiomas(String idioma) { // Nome do parâmetro alterado para "idioma"
-        this.idiomas = idioma; // Agora, o valor correto é atribuído ao atributo "idiomas"
+    Idiomas(String idioma) {
+        this.idiomas = idioma;
     }
 
     public static Idiomas fromString(String text) {

@@ -1,4 +1,4 @@
-package br.com.nazareth.literalura;
+package br.com.nazareth.literalura.client;
 
 import br.com.nazareth.literalura.entity.Autor;
 import br.com.nazareth.literalura.entity.Livro;
@@ -34,9 +34,9 @@ public class Principal {
             
             Como posso te ajudar?
             
-            1 - Procurar novo livro pelo nome
+            1 - Procurar novo livro pelo título
             2 - Listar livros registrados
-            3 - Listar livros registrados por autor
+            3 - Listar autores registrados
             4 - Apresentar livros com quantidade mínima de downloads
             5 - Livros Salvos por idioma
             6 - Buscar autores em determinado ano
