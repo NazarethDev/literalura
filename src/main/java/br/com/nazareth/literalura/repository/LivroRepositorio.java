@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public interface LivroRepositorio extends JpaRepository<Livro, Long> {
     @Query("SELECT a FROM Livro l JOIN l.autores a")
@@ -21,4 +23,5 @@ public interface LivroRepositorio extends JpaRepository<Livro, Long> {
 
     @Query("SELECT l FROM Livro l WHERE l.downloads >= :downloads")
     List<Livro> quantidadeDeDownloads(@Param("downloads") int downloads);
+
 }

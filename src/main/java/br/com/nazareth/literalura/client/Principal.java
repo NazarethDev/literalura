@@ -51,7 +51,7 @@ public class Principal {
             es - espanhol
             fr - francês
             it - italiano
-            """;
+            \n""";
 
     public void menuPrincipal() {
         while (selecao != -1) {
@@ -60,7 +60,7 @@ public class Principal {
             scanner.nextLine();
             switch (selecao) {
                 case 0:
-                    System.out.println("Saindo do programa. Até mais :)");
+                    System.out.println("\nSaindo do programa. Até mais :)\n");
                     System.exit(0);
                 case 1:
                     novoLivro();
@@ -81,15 +81,14 @@ public class Principal {
                     listarAutoresDeUmAno();
                     break;
                 default:
-                    System.out.println("Seleção inválida, tente novamente por favor");
-
+                    System.out.println("\nSeleção inválida, tente novamente por favor\n");
             }
         }
     }
 
 
     private String entradaUsuario() {
-        System.out.println("Qual livro você quer procurar?");
+        System.out.println("\nQual livro você quer procurar?\n");
         procurarTitulo = scanner.nextLine();
         return procurarTitulo;
     }
@@ -118,52 +117,78 @@ public class Principal {
             livroRepositorio.save(l);
             System.out.println(l);
         } else {
-            System.out.println("Nenhum livro encontrado :(");
+            System.out.println("\nNenhum livro encontrado :(\n");
         }
         return livro;
     }
 
     private void listarLivrosSalvos() {
         listaLivros = livroRepositorio.findAll();
-        listaLivros.stream()
-                .sorted(Comparator.comparing(Livro::getTitulo))
-                .forEach(System.out::println);
-
+        if (listaLivros.isEmpty()) {
+            System.out.println("\nAinda não há autores registrados! Por favor, tente novamente usar a opção 01 do menu inicial para encontrar um novo livro e autor\n");
+        } else {
+            System.out.println("\n***** Livros cadastrados no sistema *****\n");
+            listaLivros.stream()
+                    .sorted(Comparator.comparing(Livro::getTitulo))
+                    .forEach(System.out::println);
+            System.out.println("\n********************\n");
+        }
     }
 
     private void listarAutores() {
-     listaAutores = livroRepositorio.obterInfoAutor();
-     listaAutores.stream()
-             .sorted(Comparator.comparing(Autor::getNome))
-             .forEach(System.out::println);
-
+        listaAutores = livroRepositorio.obterInfoAutor();
+        if (listaAutores.isEmpty()) {
+            System.out.println("\nAinda não há autores registrados! Por favor, tente novamente usar a opção 01 do menu inicial para encontrar um novo livro e autor\n");
+        } else {
+            System.out.println("\n***** Autores cadastrados no sistema *****\n");
+            listaAutores.stream()
+                    .sorted(Comparator.comparing(Autor::getNome))
+                    .forEach(System.out::println);
+            System.out.println("\n********************\n");
+        }
     }
 
     private void quantidadeDeDownloadsPorNumero() {
-        System.out.println("Qual a quantidade minima de downloads para um livro que você");
+        System.out.println("\nQual a quantidade minima de downloads para um livro que você\n");
         var downloads = scanner.nextInt();
         quantidadeDeDownloads = livroRepositorio.quantidadeDeDownloads(downloads);
-        quantidadeDeDownloads.stream()
-                .sorted(Comparator.comparing(Livro::getDownloads))
-                .forEach(System.out::println);
+        if (quantidadeDeDownloads.isEmpty()) {
+            System.out.println("\nNenhum livro com essa quantidade mínima indicada encontrado\n");
+        } else {
+            quantidadeDeDownloads.stream()
+                    .sorted(Comparator.comparing(Livro::getDownloads))
+                    .forEach(System.out::println);
+        }
     }
 
     private void listarLivrosSalvosPorIdioma() {
-        System.out.println("Selecione o idioma que deseja procurar em seus livros salvos");
+        System.out.println("\nSelecione o idioma que deseja procurar em seus livros salvos\n");
         System.out.println(listaDeIdiomas);
         String idiomaSelecionado = scanner.nextLine();
         var idiomaParaBusca = Idiomas.fromString(idiomaSelecionado.toLowerCase().trim());
         livrosPorIdioma = livroRepositorio.findByIdiomas(idiomaParaBusca);
-        livrosPorIdioma.stream()
-                .forEach(System.out::println);
+        if (livrosPorIdioma.isEmpty()) {
+            System.out.println("\nNenhum livro registrado com o idioma informado encontrado\n");
+        } else {
+            System.out.println("\n***** Livros encontrados *****\n");
+            livrosPorIdioma.stream()
+                    .forEach(System.out::println);
+            System.out.println("\n********************\n");
+        }
     }
 
     private void listarAutoresDeUmAno() {
-        System.out.println("Informe um ano em que deseja saber quais autores registrados estavam/estão vivos");
+        System.out.println("\nInforme um ano em que deseja saber quais autores registrados estavam/estão vivos\n");
         var date = scanner.nextInt();
         autoresVivosEmData = livroRepositorio.listarAutoresDeUmAno(date);
-        autoresVivosEmData.stream()
-                .sorted(Comparator.comparing(Autor::getNome))
-                .forEach(System.out::println);
+        if (autoresVivosEmData.isEmpty()) {
+            System.out.println("\nNenhum autor(a) encontrado no ano informado\n");
+        } else {
+            System.out.println("\n***** Autores encontrado *****\n");
+            autoresVivosEmData.stream()
+                    .sorted(Comparator.comparing(Autor::getNome))
+                    .forEach(System.out::println);
+            System.out.println("\n*********************\n");
+        }
     }
 }
