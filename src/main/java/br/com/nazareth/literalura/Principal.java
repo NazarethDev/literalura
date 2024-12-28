@@ -8,10 +8,7 @@ import br.com.nazareth.literalura.repository.LivroRepositorio;
 import br.com.nazareth.literalura.services.ConsumoApi;
 import br.com.nazareth.literalura.services.ConverteDados;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class Principal {
     private ConsumoApi consumo = new ConsumoApi();
@@ -22,6 +19,8 @@ public class Principal {
     private List<Livro> listaLivros;
     private List<Autor> listaAutores;
     private List<Livro> livrosPorIdioma;
+    private List<Autor> autoresVivosEmData;
+    private List<Livro> quantidadeDeDownloads;
 
     public Principal(LivroRepositorio livroRepositorio) {
         this.livroRepositorio = livroRepositorio;
@@ -38,9 +37,9 @@ public class Principal {
             1 - Procurar novo livro pelo nome
             2 - Listar livros registrados
             3 - Listar livros registrados por autor
-            4 - Listar livros registrados por gênero
+            4 - Apresentar livros com quantidade mínima de downloads
             5 - Livros Salvos por idioma
-            6 - Listar livros registrados por ano de lançamento
+            6 - Buscar autores em determinado ano
             
             0 - sair
             
@@ -73,13 +72,13 @@ public class Principal {
                     listarAutores();
                     break;
                 case 4:
-                    listarLivrosSalvosPorGenero();
+                    quantidadeDeDownloadsPorNumero();
                     break;
                 case 5:
                     listarLivrosSalvosPorIdioma();
                     break;
                 case 6:
-                    listarAutoresEmUmDeterminadoAno();
+                    listarAutoresDeUmAno();
                     break;
                 default:
                     System.out.println("Seleção inválida, tente novamente por favor");
@@ -140,23 +139,31 @@ public class Principal {
 
     }
 
-    private void listarLivrosSalvosPorGenero() {
-
+    private void quantidadeDeDownloadsPorNumero() {
+        System.out.println("Qual a quantidade minima de downloads para um livro que você");
+        var downloads = scanner.nextInt();
+        quantidadeDeDownloads = livroRepositorio.quantidadeDeDownloads(downloads);
+        quantidadeDeDownloads.stream()
+                .sorted(Comparator.comparing(Livro::getDownloads))
+                .forEach(System.out::println);
     }
 
     private void listarLivrosSalvosPorIdioma() {
         System.out.println("Selecione o idioma que deseja procurar em seus livros salvos");
         System.out.println(listaDeIdiomas);
         String idiomaSelecionado = scanner.nextLine();
-        var idiomaParaBusca = Idiomas.fromString(idiomaSelecionado);
+        var idiomaParaBusca = Idiomas.fromString(idiomaSelecionado.toLowerCase().trim());
         livrosPorIdioma = livroRepositorio.findByIdiomas(idiomaParaBusca);
         livrosPorIdioma.stream()
                 .forEach(System.out::println);
-
     }
 
-    private void listarAutoresEmUmDeterminadoAno() {
-
+    private void listarAutoresDeUmAno() {
+        System.out.println("Informe um ano em que deseja saber quais autores registrados estavam/estão vivos");
+        var date = scanner.nextInt();
+        autoresVivosEmData = livroRepositorio.listarAutoresDeUmAno(date);
+        autoresVivosEmData.stream()
+                .sorted(Comparator.comparing(Autor::getNome))
+                .forEach(System.out::println);
     }
-
 }
